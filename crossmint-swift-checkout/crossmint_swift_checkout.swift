@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct crossmint_ios_checkout: App {
+struct crossmint_swift_checkout: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

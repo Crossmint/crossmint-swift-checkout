@@ -2,28 +2,22 @@
 //  ContentView.swift
 //  crossmint-swift-checkout
 //
-//  Main app view - configure checkout component here
 //  Created by Robin Curbelo on 11/13/25.
 //
 
 import SwiftUI
+import Checkout
 
 struct ContentView: View {
     var body: some View {
         CrossmintEmbeddedCheckout(
-            lineItems: LineItems(
-                tokenLocator: "solana:7EivYFyNfgGj8xbUymR7J4LuxUHLKRzpLaERHLvi7Dgu",
-                executionParameters: [
-                    "mode": "exact-in",
-                    "amount": "1",
-                    "maxSlippageBps": "500"
-                ]
-            ),
-            payment: Payment(
-                crypto: CryptoPayment(enabled: false),
-                fiat: FiatPayment(
+            orderId: "your-order-id",
+            clientSecret: "your-client-secret",
+            payment: CheckoutPayment(
+                crypto: CheckoutCryptoPayment(enabled: false),
+                fiat: CheckoutFiatPayment(
                     enabled: true,
-                    allowedMethods: AllowedMethods(
+                    allowedMethods: CheckoutAllowedMethods(
                         googlePay: false,
                         applePay: true,
                         card: false
@@ -31,15 +25,13 @@ struct ContentView: View {
                 ),
                 receiptEmail: "robin+ios@crossmint.com"
             ),
-            recipient: Recipient(walletAddress: "EbXL4e6XgbcC7s33cD5EZtyn5nixRDsieBjPQB7zf448"),
-            apiKey: "your_crossmint_client_api_key",
-            amount: "1",
-            appearance: Appearance(
-                rules: AppearanceRules(
-                    destinationInput: DestinationInputRule(display: "hidden"),
-                    receiptEmailInput: ReceiptEmailInputRule(display: "hidden"),
+            appearance: CheckoutAppearance(
+                rules: CheckoutAppearanceRules(
+                    destinationInput: CheckoutDestinationInputRule(display: "hidden"),
+                    receiptEmailInput: CheckoutReceiptEmailInputRule(display: "hidden")
                 )
-            )
+            ),
+            environment: .staging
         )
     }
 }
@@ -47,4 +39,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
