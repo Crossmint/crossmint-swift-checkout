@@ -1,178 +1,136 @@
-# Crossmint Swift Checkout
+# Crossmint Swift Checkout Example
 
-Swift integration for Crossmint's embedded checkout.
+Example iOS app demonstrating the `CrossmintEmbeddedCheckout` component from the Crossmint SDK.
 
-> **Note:** This is a reference implementation. The `CrossmintEmbeddedCheckout` component will be integrated into the official Crossmint SDK. The API surface (properties, methods, and components) will remain stable, ensuring no breaking changes when migrating to the official SDK.
+## Installation
 
+Add the Crossmint SDK to your project via Swift Package Manager:
 
-## Project Structure
+```swift
+dependencies: [
+    .package(url: "https://github.com/Crossmint/crossmint-swift-sdk", branch: "main")
+]
+```
+
+## Integration Flow
+
+### 1. Create Order (Server-side)
+
+First, create an order on your server using the Crossmint API:
+
+**Important:** Order creation must be done server-side to keep your API key secure.
 
 ```bash
-crossmint-swift-checkout/
-├── Models/
-│   ├── Checkout/
-│   │   ├── LineItems.swift
-│   │   ├── Payment.swift
-│   │   ├── Recipient.swift
-│   │   └── Appearance.swift
-│   └── Internal/
-│       └── CheckoutConfig.swift
-├── Services/
-│   └── CrossmintAPI.swift
-├── Views/
-│   ├── Components/
-│   │   ├── CrossmintEmbeddedCheckout.swift
-│   │   └── CrossmintWebView.swift
-│   └── ContentView.swift
-└── crossmint_swift_checkout.swift
+# Production
+curl --location 'https://www.crossmint.com/api/2022-06-09/orders' \
+--header 'x-api-key: YOUR_API_KEY' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "recipient": {
+        "walletAddress": "WALLET_ADDRESS"
+    },
+    "payment": {
+        "receiptEmail": "user@example.com",
+        "method": "card"
+    },
+    "lineItems": {
+        "tokenLocator": "chain:token",
+        "executionParameters": {
+            "mode": "exact-in",
+            "amount": "1"
+        }
+    }
+}'
+
+# Staging
+curl --location 'https://staging.crossmint.com/api/2022-06-09/orders' \
+--header 'x-api-key: YOUR_API_KEY' \
+--header 'Content-Type: application/json' \
+--data-raw '{...}'
 ```
 
-## Usage
+See full documentation: [Create Order API](https://docs.crossmint.com/api-reference/headless/create-order) and [Payment Methods](https://docs.crossmint.com/payments/introduction)
 
-Configure the `CrossmintEmbeddedCheckout` component with your checkout parameters:
+The response will include:
 
-### Example: Apple Pay Only
+- `orderId` - Unique identifier for the order
+- `clientSecret` - Token scoped to this order for client-side operations
+
+### 2. Use the Component (Client-side)
+
+Pass the `orderId`, `clientSecret`, and optional configuration to the component:
 
 ```swift
+import SwiftUI
+import Checkout
+
 CrossmintEmbeddedCheckout(
-    lineItems: LineItems(
-        tokenLocator: "solana:7EivYFyNfgGj8xbUymR7J4LuxUHLKRzpLaERHLvi7Dgu",
-        executionParameters: [
-            "mode": "exact-in",
-            "amount": "1",
-            "maxSlippageBps": "500"
-        ]
-    ),
-    payment: Payment(
-        crypto: CryptoPayment(enabled: false),
-        fiat: FiatPayment(
+    orderId: "your-order-id",
+    clientSecret: "your-client-secret",
+    payment: CheckoutPayment(
+        crypto: CheckoutCryptoPayment(enabled: false),
+        fiat: CheckoutFiatPayment(
             enabled: true,
-            allowedMethods: AllowedMethods(
-                googlePay: false, // Disable Google Pay
-                applePay: true, // Enable Apple Pay
-                card: false, // Disable card payments
+            allowedMethods: CheckoutAllowedMethods(
+                googlePay: false,
+                applePay: true,
+                card: false
             )
         ),
-        receiptEmail: "your@email.com"
+        receiptEmail: "user@example.com"
     ),
-    recipient: Recipient(walletAddress: "EbXL4e6XgbcC7s33cD5EZtyn5nixRDsieBjPQB7zf448"),
-    apiKey: "your_crossmint_client_api_key",
-    amount: "1",
-    appearance: Appearance(
-        rules: AppearanceRules(
-            destinationInput: DestinationInputRule(display: "hidden"),
-            receiptEmailInput: ReceiptEmailInputRule(display: "hidden")
+    appearance: CheckoutAppearance(
+        rules: CheckoutAppearanceRules(
+            destinationInput: CheckoutDestinationInputRule(display: "hidden"),
+            receiptEmailInput: CheckoutReceiptEmailInputRule(display: "hidden")
         )
-    )
+    ),
+    environment: .production  // or .staging
 )
 ```
 
-### Example: Custom Button Styling
+### 3. Poll Order Status (Server-side)
 
-```swift
-appearance: Appearance(
-    rules: AppearanceRules(
-        primaryButton: PrimaryButtonRule(
-            borderRadius: "8px",
-            font: FontStyle(
-                family: "Arial",
-                size: "16px",
-                weight: "bold"
-            ),
-            colors: ColorStyle(
-                text: "#FFFFFF",
-                background: "#000000",
-                border: nil,
-                boxShadow: nil,
-                placeholder: nil
-            ),
-            hover: StateStyle(
-                colors: ColorStyle(
-                    text: nil,
-                    background: "#3C4043",
-                    border: nil,
-                    boxShadow: nil,
-                    placeholder: nil
-                )
-            ),
-            disabled: nil
-        )
-    )
-)
+Monitor the order status on your server:
+
+```bash
+# Production
+curl --location 'https://www.crossmint.com/api/2022-06-09/orders/{orderId}' \
+--header 'x-api-key: YOUR_API_KEY'
+
+# Staging
+curl --location 'https://staging.crossmint.com/api/2022-06-09/orders/{orderId}' \
+--header 'x-api-key: YOUR_API_KEY'
 ```
 
-## API Reference
+See full documentation: [Get Order API](https://docs.crossmint.com/api-reference/headless/get-order)
 
-### Models
+## Available Properties
 
-#### LineItems
+### Currently Supported
 
-Configuration for the items being purchased.
+- `orderId` - Order identifier from create order API
+- `clientSecret` - Client secret from create order API
+- `payment` - Payment method configuration
+- `appearance` - UI customization options
+- `environment` - `.staging` or `.production`
 
-- `tokenLocator`: Token identifier (e.g., `"solana:7EivYFyNfgGj8xbUymR7J4LuxUHLKRzpLaERHLvi7Dgu"`)
-- `executionParameters`: Optional dictionary for execution configuration
+### Work in Progress
 
-#### Payment
+The following properties are defined but not yet implemented:
 
-Payment method configuration.
+- `lineItems` - Line items configuration
+- `recipient` - Recipient information
+- `apiKey` - Crossmint Client API Key
 
-- `crypto`: Cryptocurrency payment settings
-  - `enabled`: Enable/disable crypto payments
-  - `defaultChain`: Default blockchain (optional)
-  - `defaultCurrency`: Default currency (optional)
-- `fiat`: Fiat payment settings
-  - `enabled`: Enable/disable fiat payments
-  - `defaultCurrency`: Default fiat currency (optional)
-  - `allowedMethods`: Configure payment methods (optional)
-    - `googlePay`: Enable Google Pay
-    - `applePay`: Enable Apple Pay
-    - `card`: Enable card payments
-- `receiptEmail`: Email for receipt (optional)
-- `defaultMethod`: Default payment tab - `"fiat"` or `"crypto"` (optional)
+**Note:** More fields will be added in future releases.
 
-#### Recipient
+## Example
 
-Delivery destination for purchased items.
+See `ContentView.swift` for a complete working example.
 
-- `walletAddress`: Blockchain wallet address (optional)
-- `email`: Email address (optional)
+## Resources
 
-Note: Provide either `walletAddress` or `email`.
-
-#### Appearance (Optional)
-
-Customize the checkout UI appearance. Only applies to the webview display.
-
-- `rules`: Appearance rules for UI elements
-  - `destinationInput`: Control destination input visibility
-  - `receiptEmailInput`: Control email input visibility
-  - `label`: Label styling
-  - `input`: Input field styling
-  - `tab`: Tab styling
-  - `primaryButton`: Primary button styling
-
-Each rule supports:
-
-- `colors`: Color customization (text, background, border, etc.)
-- `font`: Typography (family, size, weight)
-- State-specific styling (hover, focus, selected, disabled)
-
-### CrossmintEmbeddedCheckout
-
-Main checkout component. Parameters:
-
-- `lineItems`: LineItems configuration
-- `payment`: Payment configuration
-- `recipient`: Recipient information
-- `apiKey`: Crossmint API key
-- `amount`: Purchase amount as string
-- `appearance`: Optional UI customization
-
-## Implementation Details
-
-The component handles the complete checkout flow:
-
-1. Creates an order via the Crossmint API
-2. Generates a properly encoded checkout URL
-3. Displays the checkout experience in a webview
-4. Manages loading and error states
+- [Crossmint Documentation](https://docs.crossmint.com)
+- [Create Order API](https://docs.crossmint.com/api-reference/headless/create-order)
+- [Get Order API](https://docs.crossmint.com/api-reference/headless/get-order)
