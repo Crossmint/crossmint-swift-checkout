@@ -2,6 +2,7 @@
 //  CrossmintWebView.swift
 //  crossmint-ios-checkout
 //
+//  WebKit component for rendering Crossmint checkout
 //  Created by Robin Curbelo on 11/13/25.
 //
 
@@ -16,7 +17,7 @@ struct CrossmintWebView: UIViewRepresentable {
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
-        config.applicationNameForUserAgent = "iOSPOCApp"
+        config.applicationNameForUserAgent = "Crossmint"
         
         let osVersion = UIDevice.current.systemVersion.replacingOccurrences(of: ".", with: "_")
         let safariVersion = String(Int(Double(UIDevice.current.systemVersion) ?? 0) / 2)

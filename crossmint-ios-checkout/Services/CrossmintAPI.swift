@@ -2,6 +2,7 @@
 //  CrossmintAPI.swift
 //  crossmint-ios-checkout
 //
+//  API service for Crossmint order creation and checkout URL generation
 //  Created by Robin Curbelo on 11/13/25.
 //
 
@@ -13,13 +14,13 @@ class CrossmintAPI {
     
     // MARK: - Create Order
     
-    static func createOrder(config: CrossmintCheckoutConfig, amount: String) async throws -> (clientSecret: String, orderId: String) {
+    static func createOrder(config: CheckoutConfig, amount: String) async throws -> (clientSecret: String, orderId: String) {
         let ordersBaseUrl = config.environment == "production"
             ? "https://www.crossmint.com/api/2022-06-09/orders"
             : "https://staging.crossmint.com/api/2022-06-09/orders"
         
         var lineItemsDict = config.lineItems.toDictionary()
-        if var execParams = lineItemsDict["executionParameters"] as? [String: String] {
+        if var execParams = lineItemsDict["executionParameters"] as? [String: Any] {
             execParams["amount"] = amount
             lineItemsDict["executionParameters"] = execParams
         }
@@ -64,7 +65,7 @@ class CrossmintAPI {
     
     // MARK: - Generate Checkout URL
     
-    static func generateCheckoutUrl(config: CrossmintCheckoutConfig, amount: String) async throws -> String {
+    static func generateCheckoutUrl(config: CheckoutConfig, amount: String, appearance: Appearance? = nil) async throws -> String {
         let (clientSecret, orderId) = try await createOrder(config: config, amount: amount)
         
         let checkoutBaseUrl = config.environment == "production"
@@ -72,19 +73,28 @@ class CrossmintAPI {
             : "https://staging.crossmint.com/sdk/2024-03-05/embedded-checkout"
         
         var lineItemsDict = config.lineItems.toDictionary()
-        if var execParams = lineItemsDict["executionParameters"] as? [String: String] {
+        if var execParams = lineItemsDict["executionParameters"] as? [String: Any] {
             execParams["amount"] = amount
             lineItemsDict["executionParameters"] = execParams
         }
         
-        let url = "\(checkoutBaseUrl)?" + [
+        var queryParams = [
             "orderId=\(orderId)",
             "clientSecret=\(clientSecret)",
             "lineItems=\(try jsonToURLParam(lineItemsDict))",
             "payment=\(try jsonToURLParam(config.payment.toWebviewDictionary()))",
             "recipient=\(try jsonToURLParam(config.recipient.toDictionary()))",
             "sdkMetadata=\(try jsonToURLParam(sdkMetadata))"
-        ].joined(separator: "&")
+        ]
+        
+        if let appearance = appearance {
+            let appearanceDict = appearance.toDictionary()
+            if !appearanceDict.isEmpty {
+                queryParams.append("appearance=\(try jsonToURLParam(appearanceDict))")
+            }
+        }
+        
+        let url = "\(checkoutBaseUrl)?" + queryParams.joined(separator: "&")
         
         print("Generated URL: \(url)")
         return url

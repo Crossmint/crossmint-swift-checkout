@@ -1,86 +1,175 @@
-# Crossmint iOS Checkout POC
+# Crossmint Swift Checkout
 
-A clean, well-organized iOS app demonstrating Crossmint's embedded checkout integration using a React-like component pattern.
+Swift integration for Crossmint's embedded checkout experience.
 
-## Structure
+## Project Structure
 
-```
+```bash
 crossmint-ios-checkout/
-├── Models.swift                     # Type-safe models for all checkout parameters
-├── CrossmintAPI.swift              # API service layer (order creation, URL generation)
-├── CrossmintWebView.swift          # WebKit webview component
-├── CrossmintEmbeddedCheckout.swift # Main checkout component (React-like)
-├── ContentView.swift               # UI entry point
-└── crossmint_ios_checkoutApp.swift # App entry point
+├── Models/
+│   ├── Checkout/
+│   │   ├── LineItems.swift
+│   │   ├── Payment.swift
+│   │   ├── Recipient.swift
+│   │   └── Appearance.swift
+│   └── Internal/
+│       └── CheckoutConfig.swift
+├── Services/
+│   └── CrossmintAPI.swift
+├── Views/
+│   ├── Components/
+│   │   ├── CrossmintEmbeddedCheckout.swift
+│   │   └── CrossmintWebView.swift
+│   └── ContentView.swift
+└── crossmint_ios_checkoutApp.swift
 ```
 
 ## Usage
 
-Simply configure the `CrossmintEmbeddedCheckout` component in `ContentView.swift` like a React component:
+Configure the `CrossmintEmbeddedCheckout` component with your checkout parameters:
+
+### Example: Apple Pay Only
 
 ```swift
 CrossmintEmbeddedCheckout(
     lineItems: LineItems(
         tokenLocator: "solana:7EivYFyNfgGj8xbUymR7J4LuxUHLKRzpLaERHLvi7Dgu",
-        executionParameters: ExecutionParameters(
-            mode: "exact-in",
-            amount: "1",
-            maxSlippageBps: "500"
-        )
+        executionParameters: [
+            "mode": "exact-in",
+            "amount": "1",
+            "maxSlippageBps": "500"
+        ]
     ),
     payment: Payment(
-        crypto: CryptoPayment(
-            enabled: false,
-            defaultChain: nil,
-            defaultCurrency: nil
-        ),
+        crypto: CryptoPayment(enabled: false),
         fiat: FiatPayment(
             enabled: true,
-            allowedMethods: nil
+            allowedMethods: AllowedMethods(
+                googlePay: false, // Disable Google Pay
+                applePay: true, // Enable Apple Pay
+                card: false, // Disable card payments
+            )
         ),
-        receiptEmail: "receipt@crossmint.com"
+        receiptEmail: "your@email.com"
     ),
-    recipient: Recipient(
-        walletAddress: "EbXL4e6XgbcC7s33cD5EZtyn5nixRDsieBjPQB7zf448"
-    ),
-    apiKey: "ck_staging_...",
-    amount: "1"
+    recipient: Recipient(walletAddress: "EbXL4e6XgbcC7s33cD5EZtyn5nixRDsieBjPQB7zf448"),
+    apiKey: "your_crossmint_client_api_key",
+    amount: "1",
+    appearance: Appearance(
+        rules: AppearanceRules(
+            destinationInput: DestinationInputRule(display: "hidden"),
+            receiptEmailInput: ReceiptEmailInputRule(display: "hidden")
+        )
+    )
 )
 ```
 
-## Architecture
+### Example: Custom Button Styling
 
-### Models (`Models.swift`)
-Type-safe Swift structs representing all checkout configuration:
-- `LineItems` & `ExecutionParameters`
-- `Payment`, `CryptoPayment`, `FiatPayment`, `AllowedMethods`
-- `Recipient`
-- `CrossmintCheckoutConfig`
+```swift
+appearance: Appearance(
+    rules: AppearanceRules(
+        primaryButton: PrimaryButtonRule(
+            borderRadius: "8px",
+            font: FontStyle(
+                family: "Arial",
+                size: "16px",
+                weight: "bold"
+            ),
+            colors: ColorStyle(
+                text: "#FFFFFF",
+                background: "#000000",
+                border: nil,
+                boxShadow: nil,
+                placeholder: nil
+            ),
+            hover: StateStyle(
+                colors: ColorStyle(
+                    text: nil,
+                    background: "#3C4043",
+                    border: nil,
+                    boxShadow: nil,
+                    placeholder: nil
+                )
+            ),
+            disabled: nil
+        )
+    )
+)
+```
 
-### API Layer (`CrossmintAPI.swift`)
-Handles all backend communication:
-- `createOrder()` - Creates order via Crossmint API
-- `generateCheckoutUrl()` - Builds properly encoded checkout URL
-- Helper methods for URL encoding (handles special chars like `+`)
+## API Reference
 
-### Component (`CrossmintEmbeddedCheckout.swift`)
-React-like SwiftUI component:
-- Takes typed parameters (like React props)
-- Manages its own state (loading, error, success)
-- Handles checkout lifecycle internally
+### Models
 
-### WebView (`CrossmintWebView.swift`)
-Renders the checkout experience:
-- Configured with Safari-like user agent
-- Handles navigation policies
-- Optimized for mobile display
+#### LineItems
 
-## How It Works
+Configuration for the items being purchased.
 
-1. Configure `CrossmintEmbeddedCheckout` with your parameters
-2. Component creates order via API (gets `orderId` & `clientSecret`)
-3. Generates embedded checkout URL with proper encoding
-4. Displays checkout webview
+- `tokenLocator`: Token identifier (e.g., `"solana:7EivYFyNfgGj8xbUymR7J4LuxUHLKRzpLaERHLvi7Dgu"`)
+- `executionParameters`: Optional dictionary for execution configuration
 
-All parameters are type-safe, properly encoded, and validated at compile time.
+#### Payment
 
+Payment method configuration.
+
+- `crypto`: Cryptocurrency payment settings
+  - `enabled`: Enable/disable crypto payments
+  - `defaultChain`: Default blockchain (optional)
+  - `defaultCurrency`: Default currency (optional)
+- `fiat`: Fiat payment settings
+  - `enabled`: Enable/disable fiat payments
+  - `defaultCurrency`: Default fiat currency (optional)
+  - `allowedMethods`: Configure payment methods (optional)
+    - `googlePay`: Enable Google Pay
+    - `applePay`: Enable Apple Pay
+    - `card`: Enable card payments
+- `receiptEmail`: Email for receipt (optional)
+- `defaultMethod`: Default payment tab - `"fiat"` or `"crypto"` (optional)
+
+#### Recipient
+
+Delivery destination for purchased items.
+
+- `walletAddress`: Blockchain wallet address (optional)
+- `email`: Email address (optional)
+
+Note: Provide either `walletAddress` or `email`.
+
+#### Appearance (Optional)
+
+Customize the checkout UI appearance. Only applies to the webview display.
+
+- `rules`: Appearance rules for UI elements
+  - `destinationInput`: Control destination input visibility
+  - `receiptEmailInput`: Control email input visibility
+  - `label`: Label styling
+  - `input`: Input field styling
+  - `tab`: Tab styling
+  - `primaryButton`: Primary button styling
+
+Each rule supports:
+
+- `colors`: Color customization (text, background, border, etc.)
+- `font`: Typography (family, size, weight)
+- State-specific styling (hover, focus, selected, disabled)
+
+### CrossmintEmbeddedCheckout
+
+Main checkout component. Parameters:
+
+- `lineItems`: LineItems configuration
+- `payment`: Payment configuration
+- `recipient`: Recipient information
+- `apiKey`: Crossmint API key
+- `amount`: Purchase amount as string
+- `appearance`: Optional UI customization
+
+## Implementation Details
+
+The component handles the complete checkout flow:
+
+1. Creates an order via the Crossmint API
+2. Generates a properly encoded checkout URL
+3. Displays the checkout experience in a webview
+4. Manages loading and error states

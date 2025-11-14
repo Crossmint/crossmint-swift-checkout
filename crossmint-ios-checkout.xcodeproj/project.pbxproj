@@ -6,27 +6,8 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		3B0B45DC2EC67AB800860A7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B0B45C62EC67AB700860A7F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3B0B45CD2EC67AB700860A7F;
-			remoteInfo = "crossmint-ios-checkout";
-		};
-		3B0B45E62EC67AB800860A7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3B0B45C62EC67AB700860A7F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3B0B45CD2EC67AB700860A7F;
-			remoteInfo = "crossmint-ios-checkout";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		3B0B45CE2EC67AB700860A7F /* crossmint-ios-checkout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "crossmint-ios-checkout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B0B45DB2EC67AB800860A7F /* crossmint-ios-checkoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "crossmint-ios-checkoutTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B0B45E52EC67AB800860A7F /* crossmint-ios-checkoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "crossmint-ios-checkoutUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -39,20 +20,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		3B0B45CB2EC67AB700860A7F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B0B45D82EC67AB800860A7F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B0B45E22EC67AB800860A7F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -74,8 +41,6 @@
 			isa = PBXGroup;
 			children = (
 				3B0B45CE2EC67AB700860A7F /* crossmint-ios-checkout.app */,
-				3B0B45DB2EC67AB800860A7F /* crossmint-ios-checkoutTests.xctest */,
-				3B0B45E52EC67AB800860A7F /* crossmint-ios-checkoutUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,46 +70,6 @@
 			productReference = 3B0B45CE2EC67AB700860A7F /* crossmint-ios-checkout.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3B0B45DA2EC67AB800860A7F /* crossmint-ios-checkoutTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3B0B45F22EC67AB800860A7F /* Build configuration list for PBXNativeTarget "crossmint-ios-checkoutTests" */;
-			buildPhases = (
-				3B0B45D72EC67AB800860A7F /* Sources */,
-				3B0B45D82EC67AB800860A7F /* Frameworks */,
-				3B0B45D92EC67AB800860A7F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3B0B45DD2EC67AB800860A7F /* PBXTargetDependency */,
-			);
-			name = "crossmint-ios-checkoutTests";
-			packageProductDependencies = (
-			);
-			productName = "crossmint-ios-checkoutTests";
-			productReference = 3B0B45DB2EC67AB800860A7F /* crossmint-ios-checkoutTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		3B0B45E42EC67AB800860A7F /* crossmint-ios-checkoutUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3B0B45F52EC67AB800860A7F /* Build configuration list for PBXNativeTarget "crossmint-ios-checkoutUITests" */;
-			buildPhases = (
-				3B0B45E12EC67AB800860A7F /* Sources */,
-				3B0B45E22EC67AB800860A7F /* Frameworks */,
-				3B0B45E32EC67AB800860A7F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3B0B45E72EC67AB800860A7F /* PBXTargetDependency */,
-			);
-			name = "crossmint-ios-checkoutUITests";
-			packageProductDependencies = (
-			);
-			productName = "crossmint-ios-checkoutUITests";
-			productReference = 3B0B45E52EC67AB800860A7F /* crossmint-ios-checkoutUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -160,14 +85,6 @@
 				TargetAttributes = {
 					3B0B45CD2EC67AB700860A7F = {
 						CreatedOnToolsVersion = 16.4;
-					};
-					3B0B45DA2EC67AB800860A7F = {
-						CreatedOnToolsVersion = 16.4;
-						TestTargetID = 3B0B45CD2EC67AB700860A7F;
-					};
-					3B0B45E42EC67AB800860A7F = {
-						CreatedOnToolsVersion = 16.4;
-						TestTargetID = 3B0B45CD2EC67AB700860A7F;
 					};
 				};
 			};
@@ -186,28 +103,12 @@
 			projectRoot = "";
 			targets = (
 				3B0B45CD2EC67AB700860A7F /* crossmint-ios-checkout */,
-				3B0B45DA2EC67AB800860A7F /* crossmint-ios-checkoutTests */,
-				3B0B45E42EC67AB800860A7F /* crossmint-ios-checkoutUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3B0B45CC2EC67AB700860A7F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B0B45D92EC67AB800860A7F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B0B45E32EC67AB800860A7F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -224,34 +125,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3B0B45D72EC67AB800860A7F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3B0B45E12EC67AB800860A7F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3B0B45DD2EC67AB800860A7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3B0B45CD2EC67AB700860A7F /* crossmint-ios-checkout */;
-			targetProxy = 3B0B45DC2EC67AB800860A7F /* PBXContainerItemProxy */;
-		};
-		3B0B45E72EC67AB800860A7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3B0B45CD2EC67AB700860A7F /* crossmint-ios-checkout */;
-			targetProxy = 3B0B45E62EC67AB800860A7F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3B0B45ED2EC67AB800860A7F /* Debug */ = {
@@ -431,78 +305,6 @@
 			};
 			name = Release;
 		};
-		3B0B45F32EC67AB800860A7F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J3LD2GHHR8;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "crossmint.crossmint-ios-checkoutTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/crossmint-ios-checkout.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/crossmint-ios-checkout";
-			};
-			name = Debug;
-		};
-		3B0B45F42EC67AB800860A7F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J3LD2GHHR8;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "crossmint.crossmint-ios-checkoutTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/crossmint-ios-checkout.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/crossmint-ios-checkout";
-			};
-			name = Release;
-		};
-		3B0B45F62EC67AB800860A7F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J3LD2GHHR8;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "crossmint.crossmint-ios-checkoutUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "crossmint-ios-checkout";
-			};
-			name = Debug;
-		};
-		3B0B45F72EC67AB800860A7F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J3LD2GHHR8;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "crossmint.crossmint-ios-checkoutUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "crossmint-ios-checkout";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -520,24 +322,6 @@
 			buildConfigurations = (
 				3B0B45F02EC67AB800860A7F /* Debug */,
 				3B0B45F12EC67AB800860A7F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3B0B45F22EC67AB800860A7F /* Build configuration list for PBXNativeTarget "crossmint-ios-checkoutTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3B0B45F32EC67AB800860A7F /* Debug */,
-				3B0B45F42EC67AB800860A7F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3B0B45F52EC67AB800860A7F /* Build configuration list for PBXNativeTarget "crossmint-ios-checkoutUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3B0B45F62EC67AB800860A7F /* Debug */,
-				3B0B45F72EC67AB800860A7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

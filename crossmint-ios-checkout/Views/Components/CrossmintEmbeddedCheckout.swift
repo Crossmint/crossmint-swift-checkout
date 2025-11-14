@@ -13,9 +13,26 @@ struct CrossmintEmbeddedCheckout: View {
     let recipient: Recipient
     let apiKey: String
     let amount: String
+    let appearance: Appearance?
     
     @State private var checkoutUrl: String?
     @State private var errorMessage: String?
+    
+    init(
+        lineItems: LineItems,
+        payment: Payment,
+        recipient: Recipient,
+        apiKey: String,
+        amount: String,
+        appearance: Appearance? = nil
+    ) {
+        self.lineItems = lineItems
+        self.payment = payment
+        self.recipient = recipient
+        self.apiKey = apiKey
+        self.amount = amount
+        self.appearance = appearance
+    }
     
     var body: some View {
         Group {
@@ -41,14 +58,18 @@ struct CrossmintEmbeddedCheckout: View {
     
     private func loadCheckout() async {
         do {
-            let config = CrossmintCheckoutConfig(
+            let config = CheckoutConfig(
                 lineItems: lineItems,
                 payment: payment,
                 recipient: recipient,
                 apiKey: apiKey
             )
             
-            let url = try await CrossmintAPI.generateCheckoutUrl(config: config, amount: amount)
+            let url = try await CrossmintAPI.generateCheckoutUrl(
+                config: config,
+                amount: amount,
+                appearance: appearance
+            )
             checkoutUrl = url
         } catch {
             errorMessage = "Failed to load checkout: \(error.localizedDescription)"
