@@ -35,16 +35,6 @@
 			path = "crossmint-ios-checkout";
 			sourceTree = "<group>";
 		};
-		3B0B45DE2EC67AB800860A7F /* crossmint-ios-checkoutTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "crossmint-ios-checkoutTests";
-			sourceTree = "<group>";
-		};
-		3B0B45E82EC67AB800860A7F /* crossmint-ios-checkoutUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "crossmint-ios-checkoutUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				3B0B45D02EC67AB700860A7F /* crossmint-ios-checkout */,
-				3B0B45DE2EC67AB800860A7F /* crossmint-ios-checkoutTests */,
-				3B0B45E82EC67AB800860A7F /* crossmint-ios-checkoutUITests */,
 				3B0B45CF2EC67AB700860A7F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				3B0B45DD2EC67AB800860A7F /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				3B0B45DE2EC67AB800860A7F /* crossmint-ios-checkoutTests */,
-			);
 			name = "crossmint-ios-checkoutTests";
 			packageProductDependencies = (
 			);
@@ -153,9 +138,6 @@
 			dependencies = (
 				3B0B45E72EC67AB800860A7F /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				3B0B45E82EC67AB800860A7F /* crossmint-ios-checkoutUITests */,
-			);
 			name = "crossmint-ios-checkoutUITests";
 			packageProductDependencies = (
 			);
@@ -170,6 +152,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
