@@ -1,6 +1,6 @@
 //
 //  CrossmintWebView.swift
-//  crossmint-ios-checkout
+//  crossmint-swift-checkout
 //
 //  WebKit component for rendering Crossmint checkout
 //  Created by Robin Curbelo on 11/13/25.

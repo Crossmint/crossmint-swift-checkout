@@ -1,6 +1,6 @@
 //
 //  CrossmintAPI.swift
-//  crossmint-ios-checkout
+//  crossmint-swift-checkout
 //
 //  API service for Crossmint order creation and checkout URL generation
 //  Created by Robin Curbelo on 11/13/25.

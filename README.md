@@ -1,11 +1,14 @@
 # Crossmint Swift Checkout
 
-Swift integration for Crossmint's embedded checkout experience.
+Swift integration for Crossmint's embedded checkout.
+
+> **Note:** This is a reference implementation. The `CrossmintEmbeddedCheckout` component will be integrated into the official Crossmint SDK. The API surface (properties, methods, and components) will remain stable, ensuring no breaking changes when migrating to the official SDK.
+
 
 ## Project Structure
 
 ```bash
-crossmint-ios-checkout/
+crossmint-swift-checkout/
 ├── Models/
 │   ├── Checkout/
 │   │   ├── LineItems.swift
@@ -21,7 +24,7 @@ crossmint-ios-checkout/
 │   │   ├── CrossmintEmbeddedCheckout.swift
 │   │   └── CrossmintWebView.swift
 │   └── ContentView.swift
-└── crossmint_ios_checkoutApp.swift
+└── crossmint_swift_checkout.swift
 ```
 
 ## Usage

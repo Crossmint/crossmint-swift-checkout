@@ -1,6 +1,6 @@
 //
 //  CheckoutConfig.swift
-//  crossmint-ios-checkout
+//  crossmint-swift-checkout
 //
 //  Internal configuration model for API communication
 //  Created by Robin Curbelo on 11/13/25.
