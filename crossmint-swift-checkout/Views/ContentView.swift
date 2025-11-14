@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  crossmint-ios-checkout
+//  crossmint-swift-checkout
 //
 //  Main app view - configure checkout component here
 //  Created by Robin Curbelo on 11/13/25.

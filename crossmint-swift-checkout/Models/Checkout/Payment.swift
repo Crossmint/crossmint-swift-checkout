@@ -1,6 +1,6 @@
 //
 //  Payment.swift
-//  crossmint-ios-checkout
+//  crossmint-swift-checkout
 //
 //  Created by Robin Curbelo on 11/13/25.
 //
