@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3B25E6332EC90EC100BFDDC1 /* CrossmintCheckout in Frameworks */ = {isa = PBXBuildFile; productRef = 3B25E6322EC90EC100BFDDC1 /* CrossmintCheckout */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3B0B45CE2EC67AB700860A7F /* crossmint-swift-checkout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "crossmint-swift-checkout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B25E6332EC90EC100BFDDC1 /* CrossmintCheckout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "crossmint-swift-checkout";
 			packageProductDependencies = (
+				3B25E6322EC90EC100BFDDC1 /* CrossmintCheckout */,
 			);
 			productName = "crossmint-ios-checkout";
 			productReference = 3B0B45CE2EC67AB700860A7F /* crossmint-swift-checkout.app */;
@@ -97,6 +103,9 @@
 			);
 			mainGroup = 3B0B45C52EC67AB700860A7F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3B25E6312EC90EC100BFDDC1 /* XCRemoteSwiftPackageReference "crossmint-swift-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3B0B45CF2EC67AB700860A7F /* Products */;
 			projectDirPath = "";
@@ -327,6 +336,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3B25E6312EC90EC100BFDDC1 /* XCRemoteSwiftPackageReference "crossmint-swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Crossmint/crossmint-swift-sdk";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3B25E6322EC90EC100BFDDC1 /* CrossmintCheckout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B25E6312EC90EC100BFDDC1 /* XCRemoteSwiftPackageReference "crossmint-swift-sdk" */;
+			productName = CrossmintCheckout;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3B0B45C62EC67AB700860A7F /* Project object */;
 }
