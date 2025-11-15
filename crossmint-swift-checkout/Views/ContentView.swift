@@ -22,20 +22,15 @@ struct ContentView: View {
                         applePay: true,
                         card: false
                     )
-                ),
-                receiptEmail: "robin+ios@crossmint.com"
+                )
             ),
             appearance: CheckoutAppearance(
                 rules: CheckoutAppearanceRules(
                     destinationInput: CheckoutDestinationInputRule(display: "hidden"),
                     receiptEmailInput: CheckoutReceiptEmailInputRule(display: "hidden")
                 )
-            ),
-            environment: .staging
+            )
         )
+        .background(Color.white)
     }
-}
-
-#Preview {
-    ContentView()
 }
