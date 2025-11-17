@@ -90,9 +90,53 @@ CrossmintEmbeddedCheckout(
 )
 ```
 
-### 3. Poll Order Status (Server-side)
+### 3. Track Order Status (Server-side)
 
-Monitor the order status on your server:
+Monitor the order as it progresses through payment and delivery. Use webhooks for real-time updates or polling as a fallback.
+
+#### Option A: Webhooks (Recommended)
+
+Set up webhooks to receive real-time updates as the order progresses through payment and delivery.
+
+**Setup:**
+
+1. Create a `POST` endpoint on your server (e.g., `/webhooks/crossmint`)
+2. Configure webhook in [Crossmint Console](https://www.crossmint.com/console/webhooks)
+3. Save the signing secret for verification
+
+**Your endpoint will receive:**
+
+```json
+{
+  "type": "orders.payment.succeeded",
+  "payload": {
+    "orderId": "...",
+    "payment": {
+      "status": "completed",
+      "received": {
+        "amount": "100.00",
+        "currency": "usd"
+      }
+    }
+    // ... full order object
+  }
+}
+```
+
+**Key Events:**
+
+- `orders.quote.created` - Order created
+- `orders.payment.succeeded` - Payment confirmed
+- `orders.delivery.completed` - Tokens delivered (includes `txId`)
+- `orders.payment.failed` - Payment failed
+
+**Important:** Always respond with HTTP 200 status to acknowledge receipt.
+
+See full documentation: [Webhooks Guide](https://docs.crossmint.com/introduction/platform/webhooks/overview)
+
+#### Option B: Polling (Fallback)
+
+Poll the order status if webhooks aren't feasible. Be mindful of rate limits.
 
 ```bash
 # Production
@@ -103,6 +147,19 @@ curl --location 'https://www.crossmint.com/api/2022-06-09/orders/{orderId}' \
 curl --location 'https://staging.crossmint.com/api/2022-06-09/orders/{orderId}' \
 --header 'x-api-key: YOUR_API_KEY'
 ```
+
+**Response includes order phase:**
+
+- `quote` - Order created, awaiting payment
+- `payment` - Processing payment
+- `delivery` - Payment complete, delivering tokens
+- `completed` - Tokens delivered successfully
+
+**Polling Guidelines:**
+
+- Check `order.phase === "completed"` for success
+- Check `order.payment.failureReason` for payment errors
+- Transaction ID available at `order.lineItems[0].delivery.txId` when completed
 
 See full documentation: [Get Order API](https://docs.crossmint.com/api-reference/headless/get-order)
 
