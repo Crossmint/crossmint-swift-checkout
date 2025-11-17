@@ -1,10 +1,12 @@
 # Crossmint Swift Checkout Example
 
-Example iOS app demonstrating the `CrossmintEmbeddedCheckout` component from the Crossmint SDK.
+Example iOS app demonstrating the `CrossmintEmbeddedCheckout` component from the Crossmint Swift SDK.
 
 ## Installation
 
-Add the Crossmint SDK to your project via Swift Package Manager:
+This example always uses the latest version from the `main` branch of the [Crossmint Swift SDK](https://github.com/Crossmint/crossmint-swift-sdk).
+
+To use a specific version in production, we recommend:
 
 ```swift
 dependencies: [
@@ -76,8 +78,7 @@ CrossmintEmbeddedCheckout(
                 applePay: true,
                 card: false
             )
-        ),
-        receiptEmail: "user@example.com"
+        )
     ),
     appearance: CheckoutAppearance(
         rules: CheckoutAppearanceRules(
