@@ -18,28 +18,75 @@ DerivedData/
 *.ipa
 *.xcuserstate
 *.xcscmblueprint
+
+# Xcode workspace
 *.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
-*.xcworkspace/xcshareddata/*.xccheckout
-*.xcworkspace/xcshareddata/*.xcscmblueprint
+**/*.xcworkspace/xcshareddata/*.xccheckout
+**/*.xcworkspace/xcshareddata/*.xcscmblueprint
 
 # Swift Package Manager
 ##
 .build/
 Packages/
 Package.resolved
-.swiftpm/xcode/xcuserdata/*
+.swiftpm/
 
-# Other
+# macOS
 ##
-*.generated.swift
-.env
-.env.*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+._*
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Xcode Previews
+**/Preview Content/Preview Assets.xcassets
+
+# Test coverage
+*.xcresult
+*.lcov
+*.gcov
+*.gcda
+*.gcno
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Security & Credentials
+##
 *.mobileprovision
 *.cer
 *.p12
 *.key
-*.log
+*.dSYM.zip
+*.dSYM
+.env
+.env.*
+
+# IDE
+##
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Other
+##
+*.generated.swift
+*.log
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
 
 # Claude
 .claude/
