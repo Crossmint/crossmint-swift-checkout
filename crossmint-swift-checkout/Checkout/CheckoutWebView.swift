@@ -25,12 +25,51 @@ struct CheckoutWebView: UIViewRepresentable {
         meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
         document.getElementsByTagName('head')[0].appendChild(meta);
         """
-        let userScript = WKUserScript(
+        let viewportUserScript = WKUserScript(
             source: viewportScript,
             injectionTime: .atDocumentEnd,
             forMainFrameOnly: true
         )
-        config.userContentController.addUserScript(userScript)
+        config.userContentController.addUserScript(viewportUserScript)
+
+        // Inject CSS to customize Apple Pay button (using MutationObserver to catch dynamic elements)
+        let applePayStyleScript = """
+        (function() {
+            // Create and inject style
+            var style = document.createElement('style');
+            style.textContent = `
+                apple-pay-button {
+                    --apple-pay-button-border-radius: 24px !important;
+                    --apple-pay-button-height: 48px !important;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Also try to apply directly when elements appear
+            var observer = new MutationObserver(function(mutations) {
+                var buttons = document.querySelectorAll('apple-pay-button');
+                buttons.forEach(function(btn) {
+                    btn.style.setProperty('--apple-pay-button-border-radius', '24px', 'important');
+                });
+            });
+            
+            observer.observe(document.body, { childList: true, subtree: true });
+            
+            // Initial check
+            setTimeout(function() {
+                var buttons = document.querySelectorAll('apple-pay-button');
+                buttons.forEach(function(btn) {
+                    btn.style.setProperty('--apple-pay-button-border-radius', '24px', 'important');
+                });
+            }, 1000);
+        })();
+        """
+        let applePayUserScript = WKUserScript(
+            source: applePayStyleScript,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+        config.userContentController.addUserScript(applePayUserScript)
 
         // Set content mode
         config.defaultWebpagePreferences.preferredContentMode = .mobile
