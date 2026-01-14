@@ -1,18 +1,15 @@
 # Crossmint Swift Checkout Example
 
-Example iOS app demonstrating the `CrossmintEmbeddedCheckout` component from the Crossmint Swift SDK.
+Example iOS app demonstrating how to implement the `CrossmintEmbeddedCheckout` component **without the Crossmint SDK**. This project contains a standalone implementation that you can reference or copy into your own app.
 
-## Installation
+## Dependencies
 
-This example always uses the latest version from the `main` branch of the [Crossmint Swift SDK](https://github.com/Crossmint/crossmint-swift-sdk).
+This example includes the checkout implementation directly (no SDK required). The only frameworks used are:
 
-To use a specific version in production, we recommend:
+- `SwiftUI` - UI framework
+- `WebKit` - For the checkout WebView
 
-```swift
-dependencies: [
-    .package(url: "https://github.com/Crossmint/crossmint-swift-sdk", branch: "main")
-]
-```
+No external packages or dependencies needed.
 
 ## Integration Flow
 
@@ -64,7 +61,6 @@ Pass the `orderId`, `clientSecret`, and optional configuration to the component:
 
 ```swift
 import SwiftUI
-import Checkout
 
 CrossmintEmbeddedCheckout(
     orderId: "your-order-id",
@@ -104,33 +100,12 @@ Set up webhooks to receive real-time updates as the order progresses through pay
 2. Configure webhook in [Crossmint Console](https://www.crossmint.com/console/webhooks)
 3. Save the signing secret for verification
 
-**Your endpoint will receive:**
-
-```json
-{
-  "type": "orders.payment.succeeded",
-  "payload": {
-    "orderId": "...",
-    "payment": {
-      "status": "completed",
-      "received": {
-        "amount": "100.00",
-        "currency": "usd"
-      }
-    }
-    // ... full order object
-  }
-}
-```
-
 **Key Events:**
 
 - `orders.quote.created` - Order created
 - `orders.payment.succeeded` - Payment confirmed
 - `orders.delivery.completed` - Tokens delivered (includes `txId`)
 - `orders.payment.failed` - Payment failed
-
-**Important:** Always respond with HTTP 200 status to acknowledge receipt.
 
 See full documentation: [Webhooks Guide](https://docs.crossmint.com/introduction/platform/webhooks/overview)
 
@@ -139,29 +114,28 @@ See full documentation: [Webhooks Guide](https://docs.crossmint.com/introduction
 Poll the order status if webhooks aren't feasible. Be mindful of rate limits.
 
 ```bash
-# Production
 curl --location 'https://www.crossmint.com/api/2022-06-09/orders/{orderId}' \
---header 'x-api-key: YOUR_API_KEY'
-
-# Staging
-curl --location 'https://staging.crossmint.com/api/2022-06-09/orders/{orderId}' \
 --header 'x-api-key: YOUR_API_KEY'
 ```
 
-**Response includes order phase:**
-
-- `quote` - Order created, awaiting payment
-- `payment` - Processing payment
-- `delivery` - Payment complete, delivering tokens
-- `completed` - Tokens delivered successfully
-
-**Polling Guidelines:**
-
-- Check `order.phase === "completed"` for success
-- Check `order.payment.failureReason` for payment errors
-- Transaction ID available at `order.lineItems[0].delivery.txId` when completed
-
 See full documentation: [Get Order API](https://docs.crossmint.com/api-reference/headless/get-order)
+
+## Project Structure
+
+```
+crossmint-swift-checkout/
+├── Checkout/
+│   ├── CrossmintEmbeddedCheckout.swift  # Main checkout view
+│   ├── CheckoutWebView.swift            # WebView component
+│   ├── CheckoutError.swift              # Error types
+│   └── Models/
+│       ├── CheckoutAppearance.swift     # UI customization
+│       ├── CheckoutPayment.swift        # Payment config
+│       ├── CheckoutLineItems.swift      # Line items (WIP)
+│       └── CheckoutRecipient.swift      # Recipient (WIP)
+└── Views/
+    └── ContentView.swift                # Example usage
+```
 
 ## Available Properties
 
@@ -180,8 +154,6 @@ The following properties are defined but not yet implemented:
 - `lineItems` - Line items configuration
 - `recipient` - Recipient information
 - `apiKey` - Crossmint Client API Key
-
-**Note:** More fields will be added in future releases.
 
 ## Example
 
